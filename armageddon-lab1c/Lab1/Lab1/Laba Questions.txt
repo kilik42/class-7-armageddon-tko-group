@@ -1,0 +1,19 @@
+A) Why is DB inbound source restricted to the EC2 security group? 
+Because it follows the rules of least-privilege, the database will accept requests only from the application and nothing else.
+
+B) What port does MySQL use? 
+it uses port 3306.
+
+C) Why is Secrets Manager better than storing creds in code/user-data?
+it reduces how often secrets leak, allows for rotation/controls, monitoring and control access to secrets.
+
+
+1a. The Purpose 
+To build a database and be able to make them private and secure 
+
+    Why each rule exists
+    What would break if removed
+    Why broader access is forbidden
+    Why this role exists
+    Why it can read this secret
+    Why it cannot read others

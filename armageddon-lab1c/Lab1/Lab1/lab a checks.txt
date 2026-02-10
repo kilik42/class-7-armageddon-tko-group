@@ -1,0 +1,31 @@
+aws ec2 describe-instances \
+  --filters "Name=tag:Name,Values=lab-ec2-app" \
+  --query "Reservations[].Instances[].InstanceId"
+
+aws ec2 describe-instances \
+  --instance-ids <INSTANCE_ID> \
+  --query "Reservations[].Instances[].IamInstanceProfile.Arn"
+
+aws rds describe-db-instances \
+  --db-instance-identifier lab-mysql \
+  --query "DBInstances[].DBInstanceStatus"
+
+aws rds describe-db-instances \
+  --db-instance-identifier lab-mysql \
+  --query "DBInstances[].Endpoint"
+
+aws ec2 describe-security-groups \
+  --group-ids sg-rds-lab \
+  --query "SecurityGroups[].IpPermissions"
+
+aws secretsmanager get-secret-value \
+  --secret-id lab/rds/MySQL
+
+sudo dnf install -y mariadb105
+
+mysql -h <RDS_ENDPOINT> -u admin -p
+
+Browser
+http://<EC2_PUBLIC_IP>/init
+http://<EC2_PUBLIC_IP>/add?note=cloud_labs_are_real
+http://<EC2_PUBLIC_IP>/list

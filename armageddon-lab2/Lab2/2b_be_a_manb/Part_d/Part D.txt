@@ -1,0 +1,6 @@
+why versioning is preferred but why entrypoint sometimes needs invalidation
+assets are hashed and are ideal for long cache TTLs because new builds changes the filename, so the browser will fetch the new file.  If the index.html is cached too long, users receive the old HTML that points to old hashes, even if the new assets exist.  When its not set a targeted invalidation of the enrypoint is the right fix.
+
+
+Incident Note
+CloudFront served a stale cached /static/index.html, causing clients to load an older HTML entrypoint that referenced outdated hashed assets. We confirmed the issue via X-Cache hits and non-zero Age on the HTML response. We performed a targeted CloudFront invalidation for /static/index.html (not /*) to refresh only the entrypoint while preserving static asset cache efficiency. Post-invalidation checks confirmed the HTML updated and now references the latest hashed assets.
